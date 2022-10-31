@@ -3,12 +3,18 @@ locals {
 }
 
 variable "project" {
-  description = "usgs_equake"
+  description = "usgs-equake"
 }
 
 variable "region" {
   description = "Region for GCP resources. Choose as per your location: https://cloud.google.com/about/locations"
   default = "us-east4"
+  type = string
+}
+
+variable "credentials" {
+  description = "path to credentials file rather than setting env var."
+  default = "~/.google/credentials/gcs_credentials_usgs_equake.json"
   type = string
 }
 
