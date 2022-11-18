@@ -61,9 +61,7 @@ with DAG(
         source_object=f"raw/{LOCAL_FILENAME}",
         destination_bucket=None,
         destination_object=f"pre-processed/{LOCAL_FILENAME_CSV}",
-        transform_script=(
-            "/opt/airflow/dags/" "transform_json_to_new_line_json.py"
-        ),
+        transform_script=("/opt/airflow/dags/transform_json_to_csv.py"),
     )
 
     load_csv_to_bq = GCSToBigQueryOperator(
