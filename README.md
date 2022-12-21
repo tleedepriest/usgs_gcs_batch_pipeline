@@ -1,5 +1,19 @@
 # Architecture Diagram
 ![Architecture-Diagram](./geo-spatial_earthquake_batch_pipeline_updated_hourly_and_easily_extensible_to_minutes.png "Architecture Diagram")
+# System requirements
+
+- You will need Docker, Docker Compose, Terraform and an account with Google Cloud Services, an accompaning project with a credentials file (detailed below).  
+- Built on Linux OS
+- You will need to place a .env file in the home directory with the following variables.
+    -  GCP_PROJECT_ID
+    -  GCP_GCS_BUCKET
+    -  AIRFLOW_UID
+    -  POSTGRES_USER
+    -  POSTGRES_PASSWORD
+    -  POSTGRES_DB
+    -  GOOGLE_APPLICATION_CREDENTIALS
+- The project requires a credentials file in the following directory  ~/.google/credentials/. 
+- The GOOGLE_APPLICATION_CREDENTIALS is the path to the credentials file for your Google Cloud Services Project. Mine is ~/.google/credentials/gcs_credentials_usgs_equake.json
 
 # Overview
 
