@@ -1,9 +1,1 @@
-# usgs_gcs_batch_pipeline
-This pipeline will use:
-
-terraform to set up the cloud infrastructure in GCS 
-airflow to orchestrate the ingestion of data
-DBT to handle transformations
-Looker to visualize the data
-
-
+![Architecture-Diagram]./geo-spatial_earthquake_batch_pipeline_updated_hourly_and_easily_extensible_to_minutes.png
