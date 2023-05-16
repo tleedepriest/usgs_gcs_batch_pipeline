@@ -18,6 +18,21 @@ provider "google" {
   credentials = file(var.credentials) # Use this if you do not want to set env-var GOOGLE_APPLICATION_CREDENTIALS
 }
 
+module "network" {
+  source = "./network"
+
+  vpc_network_name            = var.vpc_network_name
+  internal_firewall_ip_ranges = var.internal_firewall_ip_ranges
+}
+
+module "airflow" {
+  source = "./airflow"
+  machine          = var.machine
+  zone             = var.zone
+  image            = var.image
+  vpc_network_name = var.vpc_network_name
+}
+
 # Data Lake Bucket
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
 resource "google_storage_bucket" "data-lake-bucket" {
@@ -25,11 +40,11 @@ resource "google_storage_bucket" "data-lake-bucket" {
   location = var.region
 
   # Optional, but recommended settings:
-  storage_class               = var.storage_class
+    storage_class               = var.storage_class
   uniform_bucket_level_access = true
 
-  versioning {
-    enabled = true
+    versioning {
+      enabled = true
   }
 
   lifecycle_rule {
@@ -42,7 +57,7 @@ resource "google_storage_bucket" "data-lake-bucket" {
   }
 
   force_destroy = true
-}
+  }
 
 # DWH
 # Ref: https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/bigquery_dataset
@@ -50,4 +65,14 @@ resource "google_bigquery_dataset" "dataset" {
   dataset_id = var.BQ_DATASET
   project    = var.project
   location   = var.region
+}
+
+module "proxy" {
+  source = "./proxy"
+
+  machine                   = var.machine
+  zone                      = var.zone
+  image                     = var.image
+  jammy_vm_address          = module.airflow.jammy_vm_address
+  vpc_network_name          = var.vpc_network_name
 }
